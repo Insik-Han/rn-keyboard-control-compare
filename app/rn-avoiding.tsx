@@ -1,58 +1,57 @@
-import { Stack } from 'expo-router';
-import { View, ScrollView, Text, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+  StyleSheet,
+  Text,
+  Platform,
+  TouchableWithoutFeedback,
+  Button,
+  Keyboard,
+} from 'react-native';
 
-import { Container } from '@/components/Container';
-import { FormFields } from '@/components/FormFields';
-
-export default function RNAvoiding() {
+const KeyboardAvoidingComponent = () => {
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: 'React Native KeyboardAvoidingView' }} />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <Container>
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>React Native KeyboardAvoidingView</Text>
-              <Text style={styles.description}>
-                Using React Native&apos;s built-in KeyboardAvoidingView component with{' '}
-                {Platform.OS === 'ios' ? '"padding"' : '"height"'} behavior for {Platform.OS}.
-              </Text>
-            </View>
-            <FormFields />
-          </Container>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <Text style={styles.header}>Header</Text>
+          <TextInput placeholder="Username" style={styles.textInput} />
+          <View style={styles.btnContainer}>
+            <Button title="Submit" onPress={() => null} />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
-  keyboardView: {
+  inner: {
+    padding: 24,
     flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
+    justifyContent: 'space-around',
   },
   header: {
-    padding: 12,
+    fontSize: 36,
+    marginBottom: 48,
+  },
+  textInput: {
+    height: 40,
+    borderColor: '#000000',
     borderBottomWidth: 1,
-    borderBottomColor: '#38434D',
+    marginBottom: 36,
   },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 4,
-  },
-  description: {
-    fontSize: 14,
-    color: '#000000',
-    opacity: 0.7,
+  btnContainer: {
+    backgroundColor: 'white',
+    marginTop: 12,
   },
 });
+
+export default KeyboardAvoidingComponent;

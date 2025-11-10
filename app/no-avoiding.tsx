@@ -1,51 +1,57 @@
-import { Stack } from 'expo-router';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+  StyleSheet,
+  Text,
+  Platform,
+  TouchableWithoutFeedback,
+  Button,
+  Keyboard,
+  ScrollView,
+} from 'react-native';
 
-import { Container } from '@/components/Container';
-import { FormFields } from '@/components/FormFields';
-
-export default function NoAvoiding() {
+const KeyboardAvoidingComponent = () => {
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: 'No Keyboard Avoiding' }} />
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Container>
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Without Keyboard Avoiding</Text>
-            <Text style={styles.description}>
-              This form has no keyboard avoidance. The keyboard will cover input fields when it
-              appears.
-            </Text>
+    <View
+      style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <Text style={styles.header}>Header</Text>
+          <TextInput placeholder="Username" style={styles.textInput} />
+          <View style={styles.btnContainer}>
+            <Button title="Submit" onPress={() => null} />
           </View>
-          <FormFields />
-        </Container>
-      </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
-  scrollContent: {
-    flexGrow: 1,
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
   },
   header: {
-    padding: 12,
+    fontSize: 36,
+    marginBottom: 48,
+  },
+  textInput: {
+    height: 40,
+    borderColor: '#000000',
     borderBottomWidth: 1,
-    borderBottomColor: '#38434D',
+    marginBottom: 36,
   },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 4,
-  },
-  description: {
-    fontSize: 14,
-    color: '#000000',
-    opacity: 0.7,
+  btnContainer: {
+    backgroundColor: 'white',
+    marginTop: 12,
   },
 });
+
+export default KeyboardAvoidingComponent;
